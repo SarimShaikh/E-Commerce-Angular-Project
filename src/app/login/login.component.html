@@ -1,0 +1,48 @@
+<div *ngIf="isLoggedIn; else loggedOut">
+  Logged in as {{roles}}.
+</div>
+<div class="wrapper" ng-template #loggedOut>
+    <div class="page-header" style="background-image: url('../assets/img/sections/bruno-abatti.jpg');">
+      <div class="filter"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+            <div class="card card-register">
+              <h3 class="card-title">Welcome</h3>
+              <form class="register-form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <label>Email</label>
+                <input type="text" class="form-control no-border" placeholder="User Name" name="username" 
+                [(ngModel)]="form.username" #username="ngModel" required>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required">Username is required</div>
+                </div>
+                <label>Password</label>
+                <input type="password" class="form-control no-border" placeholder="Password" 
+                name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" >
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+                <button class="btn btn-danger btn-block btn-round">Submit</button>
+                <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+                  Login failed: {{errorMessage}}
+                </div>
+              </form>
+              <div class="forgot">
+                <a href="#paper-kit" class="btn btn-link btn-danger">Forgot password?</a>
+              </div>
+              <div class="forgot">
+                <p>Don't have an account?</p>
+                <a href="register" class="btn btn-link btn-danger">Sign Up</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-footer text-center">
+          <h6>&copy; <script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
+        </div>
+      </div>
+    </div>
+  </div>

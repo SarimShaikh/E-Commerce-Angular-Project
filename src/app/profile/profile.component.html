@@ -1,0 +1,46 @@
+<div class="main">
+  <div class="section">
+    <div class="container">
+        <form (ngSubmit)="onSubmit()">
+      <h3>Profile Setting</h3>
+      <div>
+        <div class="row">
+          
+          <div class="col-md-7 col-sm-7">
+            <div class="form-group">
+              <h6>UserName <span class="icon-danger">*</span></h6>
+              <input type="text" class="form-control border-input" placeholder="Enter Name" 
+              required [(ngModel)]="user.username" name="username">
+            </div>
+            <div class="form-group">
+              <h6>Email<span class="icon-danger">*</span></h6>
+              <input type="email" class="form-control border-input" placeholder="Enter Email"
+              required [(ngModel)]="user.email" name="email">
+            </div>
+            <div class="form-group">
+              <h6>Contact<span class="icon-danger">*</span></h6>
+              <input type="text" class="form-control border-input" placeholder="Enter Contact"
+              required [(ngModel)]="user.contact" name="contact">
+            </div>
+            
+            <div class="form-group">
+              <h6>Address</h6>
+              <textarea class="form-control textarea-limited" placeholder="Enter your Address" rows="7" maxlength="150"
+              required [(ngModel)]="user.address" name="address"></textarea>
+              <h5><small><span id="textarea-limited-message" class="pull-right">150 characters left</span></small></h5>
+            </div>
+          </div>
+        </div>
+        <div class="row buttons-row">
+          <div class="col-md-4 col-sm-4">
+            <button class="btn btn-outline-danger btn-block btn-round" type="reset">Cancel</button>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <button class="btn btn-outline-primary btn-block btn-round" type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
