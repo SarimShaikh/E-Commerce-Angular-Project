@@ -4,24 +4,31 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home';
+import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register-user/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PermissionsComponent } from './permissions/permissions.component';
+
 @NgModule({
-  declarations: [
+  declarations: [		
     AppComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        ProfileComponent
-  ],
+        ProfileComponent,
+      PermissionsComponent
+   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

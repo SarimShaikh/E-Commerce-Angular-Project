@@ -6,5 +6,5 @@ export class User {
     contact: string;
     isActive: number;
     address: string;
-    role:string[]=['user'];
+    role: string[] = ['user'];
 }   

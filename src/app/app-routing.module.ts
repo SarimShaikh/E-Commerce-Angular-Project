@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login/login.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'permissions', component: PermissionsComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

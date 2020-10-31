@@ -1,0 +1,84 @@
+<div class="section section-inputs permission-panel section-gray">
+<h3 class="ml-5">Permissions Panel</h3>
+
+<div class="container-fluid h-100 text-dark">
+  
+  <hr/>
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+      <form action="">
+        <div class="form-group">
+          <label class="">Select Role</label>
+          <select class="form-control" (change)="ddroleChange($event)">
+                    <option value="1">ROLE_ADMIN</option>
+                    <option value="3">ROLE_SUB_ADMIN</option>
+                    <option value="2">ROLE_USER</option>
+
+                  </select>
+        </div>
+        
+        
+   
+
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="text-center">UNASSIGN</h4>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-bordered">
+        <thead>
+          <th>#</th>
+                    <th>Permission</th>
+                    <th>Assign | Select All 
+                      <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+                    </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let permission of newPermissions; index as i">
+            <td>{{i+1}}</td>
+            <td>{{permission.name}}</td>
+            <td><input type="checkbox" [(ngModel)]="permission.isSelected" name="list_name" value="{{permission.privilegeId}}" (change)="isAllSelected()"/>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+    </div>
+    <div class="text-center"> 
+      <button class="btn btn-success" (click)="AssignPermission()"><i class="fa fa-check check"></i> Assign Permsissions</button>
+
+    </div>
+
+    </div>
+    <div class="col-md-6">
+    <h4 class="text-center">ASSIGNED</h4>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <th>#</th>
+            <th>Permission</th>
+                  
+        </thead>
+        <tbody>
+     <tr *ngFor="let assignedPermission of assignedPermissions; index as i">
+            <td>{{i+1}}</td>
+            <td>{{assignedPermission.name}}</td>
+          
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+<div class="text-center"> 
+      <button class="btn btn-danger" (click)="DeletePermissions()"><i class="fa fa-trash trash"></i> Delete Permsissions</button>
+
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+  

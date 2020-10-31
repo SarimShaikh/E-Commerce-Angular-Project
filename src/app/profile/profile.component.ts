@@ -23,7 +23,11 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.user = data;
-      }, error => console.log(error));
+      }, error => {
+          console.log(error);
+           this.router.navigate(['login']);
+      }
+    );
   }
 
   updateEmployee() {
