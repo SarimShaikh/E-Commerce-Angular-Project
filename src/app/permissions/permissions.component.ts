@@ -3,84 +3,100 @@ import { UserService } from './../models/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
-
+import { TokenStorageService } from '../auth/token-storage.service';
 
 @Component({
   selector: 'app-permissions',
   templateUrl: './permissions.component.html',
-  styleUrls: ['./permissions.component.css']
+  styleUrls: ['./permissions.component.css'],
 })
 export class PermissionsComponent implements OnInit {
   userId: number;
   user: User;
   permissions = [];
   assignedPermissions = [];
-  checkedList:any;
-  masterSelected:boolean;
+  checkedList: any;
+  masterSelected: boolean;
   newPermissions = [];
   roleName: string;
   assignPrivilegeInfo: Privileges;
+  adminMenu: boolean;
+  private roles: string[];
+  userIdSession: string;
 
-  
-  constructor(private userService:UserService,private router:Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private tokenStorage: TokenStorageService
+  ) {}
 
   ngOnInit() {
+    this.userIdSession = this.tokenStorage.getUserId();
+
+    if (this.tokenStorage.getToken()) {
+      this.roles = this.tokenStorage.getAuthorities();
+      if (
+        this.roles.includes('ROLE_ADMIN') ||
+        this.roles.includes('ROLE_SUB_ADMIN')
+      ) {
+        this.adminMenu = true;
+      } else {
+        this.adminMenu = false;
+      }
+    }
+
     this.masterSelected = false;
 
     this.userService.getPermissionsAll().subscribe(
-        (res) => {
+      (res) => {
         this.permissions = res;
-        this.roleName = "ROLE_ADMIN";
+        this.roleName = 'ROLE_ADMIN';
         this.getPermissionByRoleName(this.roleName);
-        
+
         //this.getNewObjectPermissions();
-
-        },
-        (error) => {
-           this.router.navigate(['login']);
-        }
+      },
+      (error) => {
+        this.router.navigate(['login']);
+      }
     );
-    
-   
- 
-
   }
 
   getNewObjectPermissions() {
-         for (let i = 0; i < this.permissions.length; i++) {
-        let newPermission = {
-          id: this.permissions[i].privilegeId,
-          name: this.permissions[i].name,
-          isSelected: ((this.assignedPermissions.some(el => el.privilegeId === this.permissions[i].privilegeId)) ? true : false)
-        };
-        this.newPermissions.push(newPermission);
+    for (let i = 0; i < this.permissions.length; i++) {
+      let newPermission = {
+        id: this.permissions[i].privilegeId,
+        name: this.permissions[i].name,
+        isSelected: this.assignedPermissions.some(
+          (el) => el.privilegeId === this.permissions[i].privilegeId
+        )
+          ? true
+          : false,
+      };
+      this.newPermissions.push(newPermission);
     }
 
     console.log(this.newPermissions);
   }
 
   ddroleChange(event) {
-    this.roleName = event.target.options[event.target.options.selectedIndex].text;
+    this.roleName =
+      event.target.options[event.target.options.selectedIndex].text;
     this.newPermissions = [];
     this.getPermissionByRoleName(this.roleName);
-    
   }
 
-  getPermissionByRoleName(rolename){
+  getPermissionByRoleName(rolename) {
     this.userService.getPermissionsByRoleName(rolename).subscribe(
-        (res) => {
-          this.assignedPermissions = res.privileges;
+      (res) => {
+        this.assignedPermissions = res.privileges;
         this.getNewObjectPermissions();
         this.getCheckedItemList();
-
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
-
 
   checkUncheckAll() {
     for (var i = 0; i < this.newPermissions.length; i++) {
@@ -89,67 +105,68 @@ export class PermissionsComponent implements OnInit {
     this.getCheckedItemList();
   }
   isAllSelected() {
-    this.masterSelected = this.newPermissions.every(function(item:any) {
-        return item.isSelected == true;
-      })
+    this.masterSelected = this.newPermissions.every(function (item: any) {
+      return item.isSelected == true;
+    });
     this.getCheckedItemList();
   }
 
-  getCheckedItemList(){
+  getCheckedItemList() {
     this.checkedList = [];
     for (var i = 0; i < this.newPermissions.length; i++) {
-      if(this.newPermissions[i].isSelected)
-      this.checkedList.push(this.newPermissions[i]);
+      if (this.newPermissions[i].isSelected)
+        this.checkedList.push(this.newPermissions[i]);
     }
     this.checkedList = this.checkedList;
   }
 
   AssignPermission() {
     let privileges = [];
-    for (var i = 0; i < this.checkedList.length; i++){
+    for (var i = 0; i < this.checkedList.length; i++) {
       privileges.push(this.checkedList[i].name);
     }
     this.assignPrivilegeInfo = new Privileges();
     this.assignPrivilegeInfo.roleName = this.roleName;
     this.assignPrivilegeInfo.privileges = privileges;
-    
 
-    this.userService.assignPermissionsByRoleName(this.assignPrivilegeInfo).subscribe(
-      (res) => {
-        alert(res);
-        location.reload();
-      },
+    this.userService
+      .assignPermissionsByRoleName(this.assignPrivilegeInfo)
+      .subscribe(
+        (res) => {
+          alert(res);
+          location.reload();
+        },
         (error) => {
           console.log(error);
         }
       );
-    
-
   }
 
   DeletePermissions() {
-    
-    var check = confirm("Are you sure to delete permissions?")
-        if(check){
-               let privileges = [];
+    var check = confirm('Are you sure to delete permissions?');
+    if (check) {
+      let privileges = [];
 
-    this.assignPrivilegeInfo = new Privileges();
-    this.assignPrivilegeInfo.roleName = this.roleName;
-    this.assignPrivilegeInfo.privileges = privileges;
-    this.userService.assignPermissionsByRoleName(this.assignPrivilegeInfo).subscribe(
-      (res) => {
-        alert("Permissions Delete Successfully");
-        location.reload();
-      },
-        (error) => {
-          console.log(error);
-        }
-      );
-        }else{
-            
-
-        }
- 
+      this.assignPrivilegeInfo = new Privileges();
+      this.assignPrivilegeInfo.roleName = this.roleName;
+      this.assignPrivilegeInfo.privileges = privileges;
+      this.userService
+        .assignPermissionsByRoleName(this.assignPrivilegeInfo)
+        .subscribe(
+          (res) => {
+            alert('Permissions Delete Successfully');
+            location.reload();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } else {
+    }
   }
 
+  SignOut() {
+    this.tokenStorage.signOut();
+    location.reload();
+  }
 }

@@ -11,16 +11,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
+
 import { PermissionsComponent } from './permissions/permissions.component';
+import { CompanyComponent } from './company/company.component';
+import { CategoryComponent } from './category/category.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 
 @NgModule({
-  declarations: [		
+  declarations: [						
     AppComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
         ProfileComponent,
-      PermissionsComponent
+        PermissionsComponent,
+        CompanyComponent,
+      CategoryComponent,
+      ProductsComponent,
+      ProductInventoryComponent
    ],
   imports: [
     BrowserModule,
@@ -28,7 +38,9 @@ import { PermissionsComponent } from './permissions/permissions.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    DataTablesModule
+
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

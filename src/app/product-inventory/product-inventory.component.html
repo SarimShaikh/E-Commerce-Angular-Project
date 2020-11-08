@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg bg-info fixed-top nav-down" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="https://demos.creative-tim.com/paper-kit-2-pro/index.html" rel="tooltip" title="Paper Kit 2 PRO" data-placement="bottom" target="_blank">
+        <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
           Ecommerce-Store
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +19,10 @@
         <button [routerLink]="['/company']" ngbDropdownItem>Manage Companies</button>
         <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
         <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
-                <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
+        <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
 
         <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
-                <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
+        <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
 
 
       </div>
@@ -60,49 +60,59 @@
   </nav>
   <!-- End Navbar -->
 
-<div class="main">
-  <div class="section">
-    <div class="container">
-        <form (ngSubmit)="onSubmit()">
-      <h3>Profile Setting</h3>
-      <div>
+  <div class="section section-inputs permission-panel section-gray">
+
+<div class="container tim-container">
+        <div class="title">
+          <h3>Category Panel</h3>
+        </div>
         <div class="row">
-          
-          <div class="col-md-7 col-sm-7">
-            <div class="form-group">
-              <h6>UserName <span class="icon-danger">*</span></h6>
-              <input type="text" class="form-control border-input" placeholder="Enter Name" 
-              required [(ngModel)]="user.username" name="username">
+         
+          <div class="col-md-12 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Inventory List</small> 
+            </h4>
             </div>
-            <div class="form-group">
-              <h6>Email<span class="icon-danger">*</span></h6>
-              <input type="email" class="form-control border-input" placeholder="Enter Email"
-              required [(ngModel)]="user.email" name="email">
+            <div class="table-responsive">
+              <table id="tbl_product_inv" class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Company</th>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Fine Amount</th>
+                    <th>Rental Days</th>
+                    <th>Available Qty</th>
+
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let inv of productInv; index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td>{{inv.companyName}}</td>
+                    <td>{{inv.itemName}}</td>
+                    <td>{{inv.itemSize}}</td>
+                    <td>{{inv.itemPrice}}</td>
+                    <td>{{inv.fineAmount}}</td>
+                    <td>{{inv.rentalDays}}</td>
+                    <td>{{inv.availableQuan}}</td>
+
+                    <td class="td-actions text-right">
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Update Qunatity" data-original-title="Add SubCategory"  class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-plus-circle"></i>
+                      </button>
+                     
+                  </tr>
+              
+                 
+                </tbody>
+              </table>
             </div>
-            <div class="form-group">
-              <h6>Contact<span class="icon-danger">*</span></h6>
-              <input type="text" class="form-control border-input" placeholder="Enter Contact"
-              required [(ngModel)]="user.contact" name="contact">
+
             </div>
-            
-            <div class="form-group">
-              <h6>Address</h6>
-              <textarea class="form-control textarea-limited" placeholder="Enter your Address" rows="7" maxlength="150"
-              required [(ngModel)]="user.address" name="address"></textarea>
-              <h5><small><span id="textarea-limited-message" class="pull-right">150 characters left</span></small></h5>
             </div>
-          </div>
-        </div>
-        <div class="row buttons-row">
-          <div class="col-md-4 col-sm-4">
-            <button class="btn btn-outline-danger btn-block btn-round" type="reset">Cancel</button>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <button class="btn btn-outline-primary btn-block btn-round" type="submit">Save</button>
-          </div>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
+            </div>
 </div>

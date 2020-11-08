@@ -1,0 +1,180 @@
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-info fixed-top nav-down" color-on-scroll="500">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
+          Ecommerce-Store
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
+        <ul class="navbar-nav ml-auto">
+         <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
+      <button class="btn btn-danger" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button [routerLink]="['/company']" ngbDropdownItem>Manage Companies</button>
+        <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
+        <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
+                <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
+
+        <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
+                <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
+
+
+      </div>
+    </div>
+  
+          <li class="nav-item">
+            <a *ngIf="userIdSession==null" class="btn btn-round btn-danger" [routerLink]="['/login']">
+              Sign In
+            </a>
+              <a *ngIf="userIdSession!=null" class="btn btn-round btn-danger" style="color:white" (click)="SignOut()">
+              Sign Out
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        <p class="hidden-lg-up">Twitter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
+                        <i class="fab fa-facebook-square"></i>
+                        <p class="hidden-lg-up">Facebook</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <p class="hidden-lg-up">Instagram</p>
+                    </a>
+                </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+<div class="section section-inputs permission-panel section-gray">
+
+<div class="container tim-container">
+        <div class="title">
+          <h3>Companies Panel</h3>
+        </div>
+        <div class="row">
+         
+          <div class="col-md-8 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Companies List</small> <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Company" (click)="AddCompany(content)" class="btn btn-info btn-link btn-sm">
+                        <i title="Add Company" class="fa fa-plus-square fa-2x"></i>
+                      </button>
+            </h4>
+            </div>
+            <div class="table-responsive">
+              <table id="tbl_companies" class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let company of companies; index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td>{{company.companyName}}</td>
+                    <td>{{company.companyContact}}</td>
+                    <td>{{company.companyEmail}}</td>
+                    <td *ngIf="company.isActive==1"><span class="btn btn-success btn-sm status">Active</span></td>
+                    <td *ngIf="company.isActive==0"><span class="btn btn-danger btn-sm  statusDA">InActive</span></td>
+
+                    <td class="td-actions text-right">
+   
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" (click)="EditCompany(content,company)" data-original-title="Edit Company" class="btn btn-success btn-link btn-sm">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove" (click)="DeleteCompany(contentDelete,company.companyId)" class="btn btn-danger btn-link btn-sm">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+              
+                 
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Modal -->
+  <ng-template #content let-modal>
+  <form name="form" (ngSubmit)="onSubmit()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Company</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="form-group">
+        <label for="companyName">Company Name</label>
+          <input id="companyName" class="form-control" placeholder="" name="companyName"  [(ngModel)]="form.companyName" #companyName="ngModel" required>
+      </div>
+        <div class="form-group">
+        <label for="companyContact">Company Contact#</label>
+          <input id="companyContact" type="number" class="form-control" placeholder="" name="companyContact" [(ngModel)]="form.companyContact" #companyContact="ngModel" required>
+      </div>
+        <div class="form-group">
+        <label for="companyEmail">Company Email</label>
+          <input id="companyEmail" type="email" class="form-control" placeholder="" name="companyEmail" [(ngModel)]="form.companyEmail" #companyEmail="ngModel" required>
+      </div>
+      <div class="form-group">
+        <label for="companyStatus">Status</label>
+        <select id="companyStatus" class="form-control" name="companyStatus" [(ngModel)]="form.companyStatus" #companyStatus="ngModel" required>
+          <option value="1">Active</option>
+          <option value="0">InActive</option>
+        </select>
+      </div>
+      <input type="hidden" id="companyId" name="companyId" [(ngModel)]="form.companyId" #companyId="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+  <ng-template #contentDelete let-modal>
+  <form name="form" (ngSubmit)="onSubmitDelete()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Company</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <h3>Do you want to Delete this Company?</h3>
+      <input type="hidden" id="companyId" name="companyId" [(ngModel)]="form.companyId" #companyId="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Yes</button>
+         <button type="button" (click)="modal.dismiss('Cross click')" class="btn btn-danger">No</button>
+
+
+  </div>
+      </form>
+
+</ng-template>
+
+            </div>
+            </div>
+            </div>
+</div>

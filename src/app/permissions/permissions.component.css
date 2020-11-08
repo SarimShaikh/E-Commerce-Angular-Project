@@ -7,8 +7,10 @@
 .table-wrapper-scroll-y {
   display: block;
 }
-
-.permission-panel table{
+.unassign-table{
+  background-color: white;
+}
+/* .permission-panel table{
    background-color: #51bcda;
 }
 
@@ -18,4 +20,4 @@ table th,td{
 .table-striped>tbody>tr:nth-child(2n+1)>td,
 .table-striped>tbody>tr:nth-child(2n+1)>th {
   color: black;
-}
+} */

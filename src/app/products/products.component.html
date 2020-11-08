@@ -1,0 +1,243 @@
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-info fixed-top nav-down" color-on-scroll="500">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
+          Ecommerce-Store
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
+        <ul class="navbar-nav ml-auto">
+         <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
+      <button class="btn btn-danger" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button [routerLink]="['/company']" ngbDropdownItem>Manage Companies</button>
+        <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
+        <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
+                <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
+
+        <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
+                <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
+
+
+      </div>
+    </div>
+  
+          <li class="nav-item">
+            <a *ngIf="userIdSession==null" class="btn btn-round btn-danger" [routerLink]="['/login']">
+              Sign In
+            </a>
+              <a *ngIf="userIdSession!=null" class="btn btn-round btn-danger" style="color:white" (click)="SignOut()">
+              Sign Out
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        <p class="hidden-lg-up">Twitter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
+                        <i class="fab fa-facebook-square"></i>
+                        <p class="hidden-lg-up">Facebook</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <p class="hidden-lg-up">Instagram</p>
+                    </a>
+                </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+  <div class="section section-inputs permission-panel section-gray">
+
+<div class="container tim-container">
+        <div class="title">
+          <h3>Products Panel</h3>
+        </div>
+
+        <div class="row">
+             <div class="col-md-12 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Product Form</small>
+
+            </h4>
+            </div>
+            <div class="card">
+              <form name="form" (ngSubmit)="onSubmitProduct($event)">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Product Name</label>
+                      <input type="text" class="form-control" id="itemName" class="form-control" name="itemName" [(ngModel)]="formProduct.itemName" #itemName="ngModel">
+                    </div>
+                  </div>
+                   <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Company</label>
+                      <select class="form-control" id="companyId" class="form-control" name="companyId" [(ngModel)]="formProduct.companyId" #companyId="ngModel">
+                        <option value="null">Select Company</option>
+
+                        <option *ngFor="let company of companies" [value]="company.companyId">{{company.companyName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                    <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select class="form-control" (change)="onCategoryChange($event)" id="categoryId" class="form-control" name="categoryId" [(ngModel)]="formProduct.categoryId" #categoryId="ngModel">
+                                            <option value="null">Select Category</option>
+
+                        <option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryType}}</option>
+                      </select>
+                    </div>
+                  </div>
+                         <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Sub Category</label>
+                      <select class="form-control" id="subCategoryId" class="form-control" name="subCategoryId" [(ngModel)]="formProduct.subCategoryId" #subCategoryId="ngModel">
+                      <option value="null">Select SubCategory</option>
+
+                        <option *ngFor="let subCategory of subCategories" [value]="subCategory.subCategoryId">{{subCategory.subCategoryType}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                    <label>Status</label>
+                      <select class="form-control" id="productStatus" class="form-control" name="productStatus" [(ngModel)]="formProduct.productStatus" #productStatus="ngModel">
+                       <option value="null">Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">InActive</option>
+
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-primary save-btn">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            </div>
+            
+        </div>
+        </div>
+
+        <div class="row">
+         
+          <div class="col-md-12 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Products List</small> 
+            </h4>
+            </div>
+            <div class="table-responsive">
+              <table id="tbl_product" class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Product</th>
+                    <th>Company</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of products; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{product.itemName}}</td>
+                    <td>{{product.companyName}}</td>
+                    <td>{{product.categoryName}}</td>
+                    <td>{{product.subCategoryName}}</td>
+                    <td *ngIf="product.isActive==1"><span class="btn btn-success btn-sm status">Active</span></td>
+                    <td *ngIf="product.isActive==0"><span class="btn btn-danger btn-sm  statusDA">InActive</span></td>
+                        <td class="td-actions text-right">
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add Product Details" data-original-title="Add Product Details" (click)="AddProductDetails(productDetailContent,product)" class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-plus-circle"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Category" class="btn btn-success btn-link btn-sm">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"  class="btn btn-danger btn-link btn-sm">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </td>  
+                  
+                  </tr>
+              
+                 
+                </tbody>
+              </table>
+            </div>
+
+
+            </div>
+            </div>
+            </div>
+</div>
+
+
+                        <!-- Modal -->
+  <ng-template #productDetailContent let-modal>
+  <form name="form" (ngSubmit)="onSubmitItemDetail()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Item Detail</h4>
+   
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+     <p><label><b>Product Name: </b> </label> {{modalContent.productName}}</p>
+    <p><label><b>Company Name: </b> </label> {{modalContent.companyName}}</p>
+    <p><label><b>Category: </b> </label> {{modalContent.categoryName}}</p>
+    <p><label><b>SubCategory: </b> </label> {{modalContent.subCategoryName}}</p>
+      <div class="form-group">
+        <label for="itemSize">Product Size</label>
+          <input id="itemSize" class="form-control" placeholder="" name="itemSize"  [(ngModel)]="formItemDetail.itemSize" #itemSize="ngModel" required>
+      </div>
+         <div class="form-group">
+        <label for="itemPrice">Product Price</label>
+          <input id="itemPrice" class="form-control" placeholder="" name="itemPrice"  [(ngModel)]="formItemDetail.itemPrice" #itemPrice="ngModel" required>
+      </div>
+       <div class="form-group">
+        <label for="fineAmount">Fine Amount</label>
+          <input id="fineAmount" class="form-control" placeholder="" name="fineAmount"  [(ngModel)]="formItemDetail.fineAmount" #fineAmount="ngModel" required>
+      </div>
+       <div class="form-group">
+        <label for="rentalDays">Rental Days</label>
+          <input id="rentalDays" class="form-control" placeholder="" name="rentalDays"  [(ngModel)]="formItemDetail.rentalDays" #rentalDays="ngModel" required>
+      </div>
+    
+      <input type="hidden" id="itemId" name="itemId" [(ngModel)]="formItemDetail.itemId" #itemId="ngModel">
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+
+
+<!--End Modal1-->

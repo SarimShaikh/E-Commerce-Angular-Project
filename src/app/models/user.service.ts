@@ -1,6 +1,6 @@
 import { Privileges } from './privileges';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
@@ -34,10 +34,10 @@ export class UserService {
     return this.http.get(`${this.baseUrl}/user/role-privileges`, { params });
   }
 
-  assignPermissionsByRoleName(privileges: Privileges){
+  assignPermissionsByRoleName(privileges: Privileges): Observable<string>{
     
     console.log(privileges);
-    return this.http.post<string>(`${this.baseUrl}/assign/privileges`, privileges, {responseType:'text'});
+    return this.http.post(`${this.baseUrl}/assign/privileges`, privileges, {responseType: 'text'});
 
   }
 

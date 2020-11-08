@@ -1,0 +1,224 @@
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-info fixed-top nav-down" color-on-scroll="500">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
+          Ecommerce-Store
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
+        <ul class="navbar-nav ml-auto">
+         <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
+      <button class="btn btn-danger" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button [routerLink]="['/company']" ngbDropdownItem>Manage Companies</button>
+        <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
+        <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
+                <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
+
+        <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
+                <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
+
+
+      </div>
+    </div>
+  
+          <li class="nav-item">
+            <a *ngIf="userIdSession==null" class="btn btn-round btn-danger" [routerLink]="['/login']">
+              Sign In
+            </a>
+              <a *ngIf="userIdSession!=null" class="btn btn-round btn-danger" style="color:white" (click)="SignOut()">
+              Sign Out
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        <p class="hidden-lg-up">Twitter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
+                        <i class="fab fa-facebook-square"></i>
+                        <p class="hidden-lg-up">Facebook</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <p class="hidden-lg-up">Instagram</p>
+                    </a>
+                </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+<div class="section section-inputs permission-panel section-gray">
+
+<div class="container tim-container">
+        <div class="title">
+          <h3>Category Panel</h3>
+        </div>
+        <div class="row">
+         
+          <div class="col-md-8 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Cateogries List</small> <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Category" (click)="AddCategory(categoryContent)" class="btn btn-info btn-link btn-sm">
+                        <i title="Add Category" class="fa fa-plus-square fa-2x"></i>
+                      </button>
+            </h4>
+            </div>
+            <div class="table-responsive">
+              <table id="tbl_category" class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Name</th>
+                    <th>SubCategory</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let category of categories; index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td>{{category.categoryType}}</td>
+                    <td><span class="subCatParent" *ngFor="let subcategory of category.subCategories">
+                      <span *ngIf="subcategory.isActive==1" class="btn btn-success btn-sm status subCat" title="Edit SubCategory" (click)="EditSubCategory(subCategoryContent,subcategory)">{{subcategory.subCategoryType}}</span>
+                          <span *ngIf="subcategory.isActive==0" class="btn btn-danger btn-sm statusDA subCat" title="Edit SubCategory" (click)="EditSubCategory(subCategoryContent,subcategory)">{{subcategory.subCategoryType}}</span>
+
+                    </span></td>
+                    <td *ngIf="category.isActive==1"><span class="btn btn-success btn-sm status">Active</span></td>
+                    <td *ngIf="category.isActive==0"><span class="btn btn-danger btn-sm  statusDA">InActive</span></td>
+
+                    <td class="td-actions text-right">
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="Add SubCategory" data-original-title="Add SubCategory" (click)="AddSubCategory(subCategoryContent,category)" class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-plus-circle"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Category" (click)="EditCategory(categoryContent,category)" class="btn btn-success btn-link btn-sm">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove" (click)="DeleteCategory(contentDelete,category)"  class="btn btn-danger btn-link btn-sm">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+              
+                 
+                </tbody>
+              </table>
+            </div>
+
+                        <!-- Modal -->
+  <ng-template #categoryContent let-modal>
+  <form name="form" (ngSubmit)="onSubmitCategory()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Category</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="form-group">
+        <label for="category">Category</label>
+          <input id="category" class="form-control" placeholder="" name="category"  [(ngModel)]="formCat.categoryType" #categoryType="ngModel" required>
+      </div>
+        
+      <div class="form-group">
+        <label for="categoryStatus">Status</label>
+        <select id="categoryStatus" class="form-control" name="categoryStatus" [(ngModel)]="formCat.categoryStatus" #categoryStatus="ngModel" required>
+          <option value="1">Active</option>
+          <option value="0">InActive</option>
+        </select>
+      </div>
+      <input type="hidden" id="categoryId" name="categoryId" [(ngModel)]="formCat.categoryId" #categoryId="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+
+
+<!--End Modal1-->
+
+<!--Sub Cat Modal-->
+ <ng-template #subCategoryContent let-modal>
+  <form name="form" (ngSubmit)="onSubmitSubCategory()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} SubCategory</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="categoryIdSub" disabled class="form-control" name="categoryIdSub" [(ngModel)]="formSubCat.categoryIdSub" #categoryIdSub="ngModel" >
+          <option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryType}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>SubCategory</label>
+        <input type="text" class="form-control" id="subCategoryType" class="form-control" name="subCategoryType" [(ngModel)]="formSubCat.subCategoryType" #subCategoryType="ngModel">
+      </div>
+        
+      <div class="form-group">
+        <label for="subCategoryStatus">Status</label>
+        <select id="subCategoryStatus" class="form-control" name="subCategoryStatus" [(ngModel)]="formSubCat.subCategoryStatus" #subCategoryStatus="ngModel" required>
+          <option value="1">Active</option>
+          <option value="0">InActive</option>
+        </select>
+      </div>
+      <input type="hidden" id="subCategoryId" name="subCategoryId" [(ngModel)]="formSubCat.subCategoryId" #subCategoryId="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+<!--Sub Cat Modal End-->
+
+
+<!--Delete Modal-->
+<ng-template #contentDelete let-modal>
+  <form name="form" (ngSubmit)="onSubmitDelete()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Company</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <h3>Do you want to Delete this {{modalContent.modalTitle}}?</h3>
+      <input type="hidden" id="idToDelete" name="idToDelete" [(ngModel)]="formCat.idToDelete" #idToDelete="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Yes</button>
+         <button type="button" (click)="modal.dismiss('Cross click')" class="btn btn-danger">No</button>
+
+
+  </div>
+      </form>
+
+</ng-template>
+
+<!--End-->
+            </div>
+            </div>
+            </div>
+</div>
