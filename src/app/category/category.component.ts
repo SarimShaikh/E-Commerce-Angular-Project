@@ -20,31 +20,14 @@ export class CategoryComponent implements OnInit {
   modalContent = {
     modalTitle: '',
   };
-  adminMenu: boolean;
-  private roles: string[];
-  userIdSession: string;
+
   constructor(
     private categoryService: CategoryService,
     private modalService: NgbModal,
-    private router: Router,
-    private tokenStorage: TokenStorageService
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.userIdSession = this.tokenStorage.getUserId();
-
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      if (
-        this.roles.includes('ROLE_ADMIN') ||
-        this.roles.includes('ROLE_SUB_ADMIN')
-      ) {
-        this.adminMenu = true;
-      } else {
-        this.adminMenu = false;
-      }
-    }
-
     this.getCategories();
   }
 
@@ -255,10 +238,5 @@ export class CategoryComponent implements OnInit {
           //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-  }
-
-  SignOut() {
-    this.tokenStorage.signOut();
-    location.reload();
   }
 }

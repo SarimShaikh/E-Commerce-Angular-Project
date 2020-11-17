@@ -1,150 +1,23 @@
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-info fixed-top nav-down" color-on-scroll="500">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
-          Ecommerce-Store
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
-        <ul class="navbar-nav ml-auto">
-         <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
-      <button class="btn btn-danger" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button [routerLink]="['/company']" ngbDropdownItem>Manage Companies</button>
-        <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
-        <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
-                <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
-
-        <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
-                <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
-
-
-      </div>
-    </div>
-  
-          <li class="nav-item">
-            <a *ngIf="userIdSession==null" class="btn btn-round btn-danger" [routerLink]="['/login']">
-              Sign In
-            </a>
-              <a *ngIf="userIdSession!=null" class="btn btn-round btn-danger" style="color:white" (click)="SignOut()">
-              Sign Out
-            </a>
-          </li>
-          <!-- <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                        <p class="hidden-lg-up">Twitter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
-                        <i class="fab fa-facebook-square"></i>
-                        <p class="hidden-lg-up">Facebook</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        <p class="hidden-lg-up">Instagram</p>
-                    </a>
-                </li> -->
-        </ul>
-      </div>
-    </div>
-  </nav>
+<app-nav></app-nav>
   <!-- End Navbar -->
 
   <div class="section section-inputs permission-panel section-gray">
 
-<div class="container tim-container">
+<div #productFormDiv class="container tim-container">
         <div class="title">
           <h3>Products Panel</h3>
         </div>
 
-        <div class="row">
-             <div class="col-md-12 ml-auto mr-auto">
-            <div class="title-head">
-              <h4 class="title"><small>Product Form</small>
-
-            </h4>
-            </div>
-            <div class="card">
-              <form name="form" (ngSubmit)="onSubmitProduct($event)">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Product Name</label>
-                      <input type="text" class="form-control" id="itemName" class="form-control" name="itemName" [(ngModel)]="formProduct.itemName" #itemName="ngModel">
-                    </div>
-                  </div>
-                   <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Company</label>
-                      <select class="form-control" id="companyId" class="form-control" name="companyId" [(ngModel)]="formProduct.companyId" #companyId="ngModel">
-                        <option value="null">Select Company</option>
-
-                        <option *ngFor="let company of companies" [value]="company.companyId">{{company.companyName}}</option>
-                      </select>
-                    </div>
-                  </div>
-                    <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Category</label>
-                      <select class="form-control" (change)="onCategoryChange($event)" id="categoryId" class="form-control" name="categoryId" [(ngModel)]="formProduct.categoryId" #categoryId="ngModel">
-                                            <option value="null">Select Category</option>
-
-                        <option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryType}}</option>
-                      </select>
-                    </div>
-                  </div>
-                         <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Sub Category</label>
-                      <select class="form-control" id="subCategoryId" class="form-control" name="subCategoryId" [(ngModel)]="formProduct.subCategoryId" #subCategoryId="ngModel">
-                      <option value="null">Select SubCategory</option>
-
-                        <option *ngFor="let subCategory of subCategories" [value]="subCategory.subCategoryId">{{subCategory.subCategoryType}}</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                    <label>Status</label>
-                      <select class="form-control" id="productStatus" class="form-control" name="productStatus" [(ngModel)]="formProduct.productStatus" #productStatus="ngModel">
-                       <option value="null">Select Status</option>
-                        <option value="1">Active</option>
-                        <option value="0">InActive</option>
-
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-primary save-btn">Save</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-            </div>
-            
-        </div>
-        </div>
-
+     
         <div class="row">
          
           <div class="col-md-12 ml-auto mr-auto">
             <div class="title-head">
               <h4 class="title"><small>Products List</small> 
+                <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Product" (click)="AddProduct(productContent)" class="btn btn-info btn-link btn-sm">
+                        <i title="Add Product" class="fa fa-plus-square fa-2x"></i>
+                      </button>
             </h4>
             </div>
             <div class="table-responsive">
@@ -166,18 +39,28 @@
                     <td>{{product.itemName}}</td>
                     <td>{{product.companyName}}</td>
                     <td>{{product.categoryName}}</td>
-                    <td>{{product.subCategoryName}}</td>
+                    <td>{{product.subCategory.subCategoryType}}</td>
                     <td *ngIf="product.isActive==1"><span class="btn btn-success btn-sm status">Active</span></td>
                     <td *ngIf="product.isActive==0"><span class="btn btn-danger btn-sm  statusDA">InActive</span></td>
                         <td class="td-actions text-right">
                         <button type="button" data-toggle="tooltip" data-placement="top" title="Add Product Details" data-original-title="Add Product Details" (click)="AddProductDetails(productDetailContent,product)" class="btn btn-info btn-link btn-sm">
-                        <i class="fa fa-plus-circle"></i>
+                        <i class="fa fa-plus-circle fa-lg"></i>
                       </button>
-                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Category" class="btn btn-success btn-link btn-sm">
-                        <i class="fa fa-edit"></i>
+                       <button type="button" data-toggle="tooltip" data-placement="top" title="View Product Details" data-original-title="View Product Details" (click)="ViewProductDetails(viewProductDetailContent,product)" class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-list-alt fa-lg"></i>
                       </button>
-                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"  class="btn btn-danger btn-link btn-sm">
-                        <i class="fa fa-times"></i>
+                          <button type="button" data-toggle="tooltip" data-placement="top" title="Upload Product Images" data-original-title="Upload Product Images" (click)="UploadProductImages(uploadProductImageContent,product)" class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-upload fa-lg"></i>
+                      </button>
+                           <button type="button" data-toggle="tooltip" data-placement="top" title="View Product Images" data-original-title="View Product Details" (click)="ViewProductImages(productImageContent,product)" class="btn btn-info btn-link btn-sm">
+                        <i class="fa fa-image fa-lg"></i>
+                      </button>
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="Edit Product" data-original-title="Edit Product" (click)="EditProduct(product,productContent)" class="btn btn-success btn-link btn-sm">
+                        <i class="fa fa-edit fa-lg"></i>
+                      </button>
+                        
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="Delete Product" data-original-title="Remove Product" (click)="DeleteProduct(product,contentDelete)"  class="btn btn-danger btn-link btn-sm">
+                        <i class="fa fa-times fa-lg"></i>
                       </button>
                     </td>  
                   
@@ -193,6 +76,154 @@
             </div>
             </div>
 </div>
+
+
+
+<!-- Product Upload Images Modal -->
+  <ng-template #uploadProductImageContent let-modal>
+     <form name="form" (submit)="onUploadImage()" enctype="multipart/form-data">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Upload Product Images</h4>
+   
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    <div class="form-group">
+      <input class="form-control" type="file" id="files" name="files" [(ngModel)]="formProduct.files" (change)="selectFiles($event)" #files="ngModel" multiple/>
+    </div>
+   <input type="hidden" id="itemId" name="itemId" [(ngModel)]="formProduct.itemId" #itemId="ngModel">
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+
+
+<!--End Product Upload Images Modal-->
+
+                        <!-- Product Images Modal -->
+  <ng-template #productImageContent let-modal>
+     <form name="form">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Product Images</h4>
+   
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let image of itemImages; index as i">
+             <span style="float:right"><button (click)="onImageDelete(image.imageId)"><i class="fa fa-times"></i></button></span>
+       <div class="item">
+        
+            <img [src]="image.imagePath">
+            
+          </div>
+         
+          </div>
+       
+
+        </div>
+      
+                   
+              
+            
+  </div>
+  <div class="modal-footer">
+          <button (click)="modal.dismiss('Cross click')" class="btn btn-primary">Ok</button>
+
+  </div>
+      </form>
+
+</ng-template>
+
+
+<!--End Product Modal-->
+
+
+                        <!-- Product Form Modal -->
+  <ng-template #productContent let-modal>
+     <form name="form" (ngSubmit)="onSubmitProduct($event,productContent)">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Product</h4>
+   
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+             
+                    <div class="form-group">
+                      <label>Product Name</label>
+                      <input type="text" class="form-control" id="itemName" class="form-control" name="itemName" [(ngModel)]="formProduct.itemName" #itemName="ngModel">
+                    </div>
+                    <div class="form-group">
+                      <label>Company</label>
+                      <select class="form-control" id="companyId" class="form-control" name="companyId" [(ngModel)]="formProduct.companyId" #companyId="ngModel">
+                        <option value="null">Select Company</option>
+
+                        <option *ngFor="let company of companies" [value]="company.companyId">{{company.companyName}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select class="form-control" (change)="onCategoryChange($event)" id="categoryId" class="form-control" name="categoryId" [(ngModel)]="formProduct.categoryId" #categoryId="ngModel">
+                                            <option value="null">Select Category</option>
+
+                        <option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryType}}</option>
+                      </select>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label>Sub Category</label>
+                      <select class="form-control" id="subCategoryId" class="form-control" name="subCategoryId" [(ngModel)]="formProduct.subCategoryId" #subCategoryId="ngModel">
+                      <option value="null">Select SubCategory</option>
+
+                        <option *ngFor="let subCategory of subCategories" [value]="subCategory.subCategoryId">{{subCategory.subCategoryType}}</option>
+                      </select>
+                    </div>
+                 
+            
+                    <div class="form-group">
+                    <label>Status</label>
+                      <select class="form-control" id="productStatus" class="form-control" name="productStatus" [(ngModel)]="formProduct.productStatus" #productStatus="ngModel">
+                       <option value="null">Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">InActive</option>
+
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <input type="hidden" id="itemId" name="itemId" [(ngModel)]="formProduct.itemId" #itemId="ngModel">
+                    </div>
+                 
+              
+            
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+      </form>
+
+</ng-template>
+
+
+<!--End Product Modal-->
+
 
 
                         <!-- Modal -->
@@ -241,3 +272,98 @@
 
 
 <!--End Modal1-->
+
+ <!-- View Details Modal -->
+  <ng-template #viewProductDetailContent let-modal>
+  <form name="form">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Item Detail</h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+        <p><label><b>Product: </b></label> {{modalContent.productName}}</p>
+ 
+<table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Fine Amount</th>
+      <th>Rental Days</th>
+      <th class="text-right">Action</th>
+    </tr>
+      </thead>
+
+   
+  <tbody>
+     <tr *ngFor="let productDetail of itemDetails; let i = index">
+      <td>
+        <input type="hidden" name="itemDetailId" [(ngModel)]="productDetail.itemDetailId"/>
+        <span *ngIf="!productDetail.editable">{{productDetail.itemSize}}</span>
+        <input type="text" class="form-control" name="itemSize" [(ngModel)]="productDetail.itemSize" *ngIf="productDetail.editable"/>
+      </td>
+    <td>
+        <span *ngIf="!productDetail.editable">{{productDetail.itemPrice}}</span>
+        <input type="text" class="form-control" name="itemPrice" [(ngModel)]="productDetail.itemPrice" *ngIf="productDetail.editable"/>
+      </td>
+          <td>
+        <span *ngIf="!productDetail.editable">{{productDetail.fineAmount}}</span>
+        <input type="text" class="form-control" name="fineAmount" [(ngModel)]="productDetail.fineAmount" *ngIf="productDetail.editable"/>
+      </td>
+          <td>
+        <span *ngIf="!productDetail.editable">{{productDetail.rentalDays}}</span>
+        <input type="text" class="form-control" name="rentalDays" [(ngModel)]="productDetail.rentalDays" *ngIf="productDetail.editable"/>
+      </td>
+      <td *ngIf="!productDetail.editable"><button class="btn btn-info btn-link btn-sm" (click)="editProductDetail(productDetail)"><i class="fa fa-edit"></i></button>
+      <button class="btn btn-danger btn-link btn-sm" (click)="deleteProductDetail(productDetail)"><i class="fa fa-times"></i></button>
+      </td>
+     <td *ngIf="productDetail.editable"><button class="btn btn-info btn-link btn-sm" (click)="onDone(productDetail)"><i class="fa fa-check"></i></button>
+    <button class="btn btn-danger btn-link btn-sm" (click)="onCancel(productDetail)"><i class="fa fa-times-circle"></i></button>
+    </td>
+
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.dismiss('Cross click')">Ok</button>
+
+  </div>
+</form>
+
+</ng-template>
+
+
+<!--End ViewDetails Modal-->
+
+
+<!--Delete Modal-->
+  <ng-template #contentDelete let-modal>
+  <form name="form" (ngSubmit)="onSubmitDelete()">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{modalContent.modalTitle}} Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <h3>Do you want to Delete this {{modalContent.modalBodyTitle}} ?</h3>
+      <input type="hidden" id="itemId" name="itemId" [(ngModel)]="formProduct.itemId" #companyId="ngModel" required>
+  </div>
+  <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Yes</button>
+         <button type="button" (click)="modal.dismiss('Cross click')" class="btn btn-danger">No</button>
+
+
+  </div>
+      </form>
+
+</ng-template>
+
+<!--End Delete Modal-->

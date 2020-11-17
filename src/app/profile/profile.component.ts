@@ -10,32 +10,14 @@ import { UserService } from '../models/user.service';
 export class ProfileComponent implements OnInit {
   userId: number;
   user: User;
-  adminMenu: boolean;
-  private roles: string[];
-  userIdSession: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private tokenStorage: TokenStorageService,
     private userService: UserService
   ) {}
 
   ngOnInit() {
-    this.userIdSession = this.tokenStorage.getUserId();
-
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      if (
-        this.roles.includes('ROLE_ADMIN') ||
-        this.roles.includes('ROLE_SUB_ADMIN')
-      ) {
-        this.adminMenu = true;
-      } else {
-        this.adminMenu = false;
-      }
-    }
-
     this.user = new User();
 
     this.userId = parseInt(sessionStorage.getItem('userId'));
@@ -69,10 +51,5 @@ export class ProfileComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
-  }
-
-  SignOut() {
-    this.tokenStorage.signOut();
-    location.reload();
   }
 }

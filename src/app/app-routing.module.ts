@@ -1,3 +1,4 @@
+import { ProductsWebComponent } from './products-web/products-web.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 import { ProductsComponent } from './products/products.component';
 import { CategoryComponent } from './category/category.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'company', component: CompanyComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'product', component: ProductsComponent },
+  { path: 'viewproducts', component: ProductsWebComponent },
   { path: 'productinventory', component: ProductInventoryComponent },
 
   // otherwise redirect to home

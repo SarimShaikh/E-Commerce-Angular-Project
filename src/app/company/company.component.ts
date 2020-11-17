@@ -17,30 +17,14 @@ export class CompanyComponent implements OnInit {
   modalContent = {
     modalTitle: '',
   };
-  adminMenu: boolean;
-  private roles: string[];
-  userIdSession: string;
+
   constructor(
     private companyService: CompanyService,
     private router: Router,
-    private modalService: NgbModal,
-    private tokenStorage: TokenStorageService
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
-    this.userIdSession = this.tokenStorage.getUserId();
-
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      if (
-        this.roles.includes('ROLE_ADMIN') ||
-        this.roles.includes('ROLE_SUB_ADMIN')
-      ) {
-        this.adminMenu = true;
-      } else {
-        this.adminMenu = false;
-      }
-    }
     this.getCompanies();
   }
 
@@ -162,10 +146,5 @@ export class CompanyComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  SignOut() {
-    this.tokenStorage.signOut();
-    location.reload();
   }
 }

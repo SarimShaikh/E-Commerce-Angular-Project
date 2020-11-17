@@ -20,31 +20,10 @@ export class PermissionsComponent implements OnInit {
   newPermissions = [];
   roleName: string;
   assignPrivilegeInfo: Privileges;
-  adminMenu: boolean;
-  private roles: string[];
-  userIdSession: string;
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private tokenStorage: TokenStorageService
-  ) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    this.userIdSession = this.tokenStorage.getUserId();
-
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      if (
-        this.roles.includes('ROLE_ADMIN') ||
-        this.roles.includes('ROLE_SUB_ADMIN')
-      ) {
-        this.adminMenu = true;
-      } else {
-        this.adminMenu = false;
-      }
-    }
-
     this.masterSelected = false;
 
     this.userService.getPermissionsAll().subscribe(
@@ -163,10 +142,5 @@ export class PermissionsComponent implements OnInit {
         );
     } else {
     }
-  }
-
-  SignOut() {
-    this.tokenStorage.signOut();
-    location.reload();
   }
 }

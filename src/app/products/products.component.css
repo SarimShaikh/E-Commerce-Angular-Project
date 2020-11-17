@@ -21,3 +21,25 @@
   background-color: #dc3545;
   border-color: #dc3545;
 }
+.itemDetails td,th{
+  font-size: 14px !important;
+}
+.itemDetails th{
+  font-weight: bold !important;
+}
+.title-head button {
+  float: right;
+}
+
+.item img {
+  max-width: 100%;
+  height: auto;
+}
+.item {
+  width: 120px;
+  min-height: 120px;
+  max-height: auto;
+  float: left;
+  margin: 3px;
+  padding: 3px;
+}

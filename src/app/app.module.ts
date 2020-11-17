@@ -1,3 +1,4 @@
+import { NavComponent } from './common/nav/nav.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,19 +19,25 @@ import { CompanyComponent } from './company/company.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProductsWebComponent } from './products-web/products-web.component';
 @NgModule({
-  declarations: [						
+  declarations: [	
     AppComponent,
-        HomeComponent,
-        LoginComponent,
-        RegisterComponent,
-        ProfileComponent,
-        PermissionsComponent,
-        CompanyComponent,
-      CategoryComponent,
-      ProductsComponent,
-      ProductInventoryComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    PermissionsComponent,
+    CompanyComponent,
+    CategoryComponent,
+    ProductsComponent,
+    ProductInventoryComponent,
+    NavComponent,
+      ProductsWebComponent
    ],
   imports: [
     BrowserModule,
@@ -39,10 +46,13 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
     FormsModule,
     HttpClientModule,
     NgbModule,
-    DataTablesModule
-
+    DataTablesModule,
+    NoopAnimationsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
