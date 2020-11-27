@@ -10,6 +10,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register-user/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'permissions', component: PermissionsComponent },
   { path: 'company', component: CompanyComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'product', component: ProductsComponent },
   { path: 'viewproducts', component: ProductsWebComponent },

@@ -1,7 +1,7 @@
-<div *ngIf="isLoggedIn; else loggedOut">
+<div *ngIf="isLoggedIn==true">
   Logged in as {{roles}}.
 </div>
-<div class="wrapper" ng-template #loggedOut>
+<div *ngIf="isLoginFailed==true" class="wrapper" ng-template #loggedOut>
     <div class="page-header" style="background-image: url('../assets/img/sections/bruno-abatti.jpg');">
       <div class="filter"></div>
       <div class="container">
@@ -23,7 +23,7 @@
                   <div *ngIf="password.errors.required">Password is required</div>
                   <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
                 </div>
-                <button class="btn btn-danger btn-block btn-round">Submit</button>
+                <button type="sub" class="btn btn-danger btn-block btn-round">Submit</button>
                 <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
                   Login failed: {{errorMessage}}
                 </div>

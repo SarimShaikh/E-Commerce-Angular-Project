@@ -13,6 +13,53 @@
       </div>
       <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
         <ul class="navbar-nav ml-auto">
+
+           <li>
+                      <ng-container>
+
+  
+
+  <ng-container *ngIf="categories.length> 0">
+  
+      <button (click)="goToProudcts()" class="btn btn-danger btn-round" #button mat-button [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger" (mouseenter)="buttonEnter(levelOneTrigger)" (mouseleave)="buttonLeave(levelOneTrigger, button)">
+     Products
+    </button>  
+    <mat-menu #levelOne="matMenu" direction="down" yPosition="below" [hasBackdrop]="false">
+      <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelOneTrigger, button)">
+      <ng-container *ngFor="let childL1 of categories">
+        <li class="p-0" *ngIf="!childL1.subCategories" mat-menu-item>
+          <a class="nav-link">{{childL1.categoryType}}
+            <i *ngIf="childL1.icon" [ngClass]="childL1.icon"></i>
+          </a>
+        </li>
+        <ng-container *ngIf="childL1.subCategories && childL1.subCategories.length > 0">
+          <li mat-menu-item #levelTwoTrigger="matMenuTrigger" [matMenuTriggerFor]="levelTwo">
+            <span class="icon fa" [ngClass]="childL1.icon"></span>
+            <span (click)="searchByCategory(childL1)">{{childL1.categoryType}}</span>
+          </li>
+
+          <mat-menu #levelTwo="matMenu">
+            <span (mouseenter)="menu2enter()" (mouseleave)="menu2Leave(levelOneTrigger,levelTwoTrigger, button)">
+            <ng-container *ngFor="let childL2 of childL1.subCategories">
+              <li class="p-0" mat-menu-item>
+                <a (click)="searchBySubCategory(childL2)" class="nav-link">{{childL2.subCategoryType}}
+                  <i *ngIf="childL2.icon" [ngClass]="childL2.icon"></i>
+                </a>
+              </li>
+            </ng-container>
+            </span>
+          </mat-menu>
+        </ng-container>
+      </ng-container>
+      </span>
+    </mat-menu>
+  </ng-container>
+
+</ng-container>
+
+
+          </li>
+
          <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
       <button class="btn btn-danger" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -35,6 +82,12 @@
               <a *ngIf="userIdSession!=null" class="btn btn-round btn-danger" style="color:white" (click)="SignOut()">
               Sign Out
             </a>
+          </li>
+
+          <li>
+               <button (click)="goToCart()" class="btn btn-danger btn-link">
+     <i class="fa fa-shopping-cart" style="font-size:2em !important"></i>
+    </button>  
           </li>
           <!-- <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">

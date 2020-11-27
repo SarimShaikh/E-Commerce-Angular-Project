@@ -189,7 +189,7 @@ export class ProductsComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(
       (res) => {
-        this.products = res;
+        this.products = res.items;
         setTimeout(() => {
           $('#tbl_product').DataTable();
         }, 500);

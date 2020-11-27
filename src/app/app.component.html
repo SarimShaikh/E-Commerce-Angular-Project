@@ -9,8 +9,9 @@
 <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/42/9/util.js"></script>
 
 <body class="{{class}} sidebar-collapse">
+  <ng-http-loader></ng-http-loader>
   <!-- Navbar -->
-  <nav *ngIf="route !== '/login' && route !== '/register'  && route !== '/profile' && route !== '/productinventory' && route!=='/permissions' && route!=='/company' && route!=='/category' && route!=='/product'"  class="navbar navbar-expand-lg bg-white fixed-top nav-down navbar-transparent" color-on-scroll="500">
+  <nav *ngIf="route !== '/login' && route !== '/register' && route!=='/viewproducts' && route!=='/cart'  && route !== '/profile' && route !== '/productinventory' && route!=='/permissions' && route!=='/company' && route!=='/category' && route!=='/product'"  class="navbar navbar-expand-lg bg-white fixed-top nav-down navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" [routerLink]="['']" rel="tooltip" data-placement="bottom">
@@ -24,6 +25,52 @@
       </div>
       <div class="collapse navbar-collapse" data-nav-image="../assets/img/blurred-image-1.jpg" data-color="orange">
         <ul class="navbar-nav ml-auto">
+          <li>
+                      <ng-container>
+
+  
+
+  <ng-container *ngIf="categories.length> 0">
+  
+      <button (click)="goToProudcts()" class="btn btn-danger btn-round" #button mat-button [matMenuTriggerFor]="levelOne" #levelOneTrigger="matMenuTrigger" (mouseenter)="buttonEnter(levelOneTrigger)" (mouseleave)="buttonLeave(levelOneTrigger, button)">
+     Products
+    </button>  
+    <mat-menu #levelOne="matMenu" direction="down" yPosition="below" [hasBackdrop]="false">
+      <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelOneTrigger, button)">
+      <ng-container *ngFor="let childL1 of categories">
+        <li class="p-0" *ngIf="!childL1.subCategories" mat-menu-item>
+          <a class="nav-link">{{childL1.categoryType}}
+            <i *ngIf="childL1.icon" [ngClass]="childL1.icon"></i>
+          </a>
+        </li>
+        <ng-container *ngIf="childL1.subCategories && childL1.subCategories.length > 0">
+          <li mat-menu-item #levelTwoTrigger="matMenuTrigger" [matMenuTriggerFor]="levelTwo">
+            <span class="icon fa" [ngClass]="childL1.icon"></span>
+            <span (click)="searchByCategory(childL1)">{{childL1.categoryType}}</span>
+          </li>
+
+          <mat-menu #levelTwo="matMenu">
+            <span (mouseenter)="menu2enter()" (mouseleave)="menu2Leave(levelOneTrigger,levelTwoTrigger, button)">
+            <ng-container *ngFor="let childL2 of childL1.subCategories">
+              <li class="p-0" mat-menu-item>
+                <a (click)="searchBySubCategory(childL2)" class="nav-link">{{childL2.subCategoryType}}
+                  <i *ngIf="childL2.icon" [ngClass]="childL2.icon"></i>
+                </a>
+              </li>
+            </ng-container>
+            </span>
+          </mat-menu>
+        </ng-container>
+      </ng-container>
+      </span>
+    </mat-menu>
+  </ng-container>
+
+</ng-container>
+
+
+          </li>
+
          <div ngbDropdown class="d-inline-block" *ngIf="adminMenu==true">
       <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Manage Master Data</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -69,7 +116,7 @@
     </div>
   </nav>
   <!-- End Navbar -->
-<div *ngIf="route !== '/login'  && route !== '/profile' && route !== '/productinventory'  && route !== '/register' && route!=='/permissions' && route!=='/company' && route!=='/category' && route!=='/product'" class="page-header" style="background-image: url('../assets/img/ecommerce/balmain_runway.jpg');">
+<div *ngIf="route !== '/login' && route!=='/cart'  && route!=='/viewproducts'   && route !== '/profile' && route !== '/productinventory'  && route !== '/register' && route!=='/permissions' && route!=='/company' && route!=='/category' && route!=='/product'" class="page-header" style="background-image: url('../assets/img/ecommerce/balmain_runway.jpg');">
     <div class="filter"></div>
     <div class="content-center">
       <div class="container text-center">

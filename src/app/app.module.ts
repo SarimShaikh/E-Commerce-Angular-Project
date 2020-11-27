@@ -1,15 +1,18 @@
-import { NavComponent } from './common/nav/nav.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register-user/register.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from './app.component';
+import { NavComponent } from './common/nav/nav.component';
+
+import { HomeComponent } from './home';
+import { LoginComponent } from './login';
+import { RegisterComponent } from './register-user/register.component';
+
 import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
@@ -22,10 +25,14 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { NgHttpLoaderModule } from 'ng-http-loader';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProductsWebComponent } from './products-web/products-web.component';
+import { CartComponent } from './cart/cart.component';
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
@@ -37,8 +44,9 @@ import { ProductsWebComponent } from './products-web/products-web.component';
     ProductsComponent,
     ProductInventoryComponent,
     NavComponent,
-      ProductsWebComponent
-   ],
+    ProductsWebComponent,
+    CartComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -51,6 +59,8 @@ import { ProductsWebComponent } from './products-web/products-web.component';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
+    MatMenuModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
