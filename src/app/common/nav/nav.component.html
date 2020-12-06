@@ -67,6 +67,9 @@
         <button [routerLink]="['/category']"  ngbDropdownItem>Manage Categories</button>
         <button [routerLink]="['/product']"  ngbDropdownItem>Manage Products</button>
                 <button [routerLink]="['/productinventory']"  ngbDropdownItem>Manage Products Inventory</button>
+                <button [routerLink]="['/rentalitems']"  ngbDropdownItem>Rental Items</button>
+                <button [routerLink]="['/orders']"  ngbDropdownItem>Orders</button>
+                <button [routerLink]="['/returnitems']"  ngbDropdownItem>Return Items</button>
 
         <button [routerLink]="['/permissions']"  ngbDropdownItem>Manage Permissions</button>
                 <button [routerLink]="['/profile']"  ngbDropdownItem>Manage Profile</button>
@@ -87,6 +90,7 @@
           <li>
                <button (click)="goToCart()" class="btn btn-danger btn-link">
      <i class="fa fa-shopping-cart" style="font-size:2em !important"></i>
+     
     </button>  
           </li>
           <!-- <li class="nav-item">

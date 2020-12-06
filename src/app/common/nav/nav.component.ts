@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
   private roles: string[];
   userIdSession: string;
   categories = [];
-
+  totalCartItems = window.localStorage.getItem('totalCartItem');
   //Menu Logic Variables
 
   modulesList: Array<any>;

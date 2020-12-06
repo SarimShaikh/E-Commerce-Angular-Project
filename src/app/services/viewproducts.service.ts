@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ViewproductsService {
   private baseUrl = 'http://localhost:8082/api/v1/inventory';
+  private salesUrl = 'http://localhost:8083/api/v1/sales';
 
   constructor(private http: HttpClient) {}
 
@@ -40,5 +41,15 @@ export class ViewproductsService {
         `${this.baseUrl}/get-category-items?categoryId=${categoryId}&subCategoryId=${subCategoryId}&page=${page}&size=${size}`
       );
     }
+  }
+
+  getQuantityStatus(itemDetailId, quantity) {
+    return this.http.get(
+      `${this.salesUrl}/check-quantity?itemDetailId=${itemDetailId}&quantity=${quantity}`
+    );
+  }
+
+  SubmitOrder(orderInfo: any): Observable<any> {
+    return this.http.post(`${this.salesUrl}/place-order`, orderInfo);
   }
 }

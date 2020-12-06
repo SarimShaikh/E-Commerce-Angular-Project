@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,13 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
   items = [];
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    let items = window.localStorage.getItem('CartItems');
-    if (items !== undefined || items !== null) {
-      this.items = JSON.parse(items);
+    let item = window.localStorage.getItem('OrderDetails');
+    if (item !== undefined || item !== null) {
+      this.items = JSON.parse(item);
       console.log(this.items);
     }
+  }
+
+  onCheckout() {
+    this.router.navigate(['payment']);
+  }
+  removeCartItem(item) {
+    this.items = this.items.filter((x) => x.itemDetailId !== item.itemDetailId);
+
+    window.localStorage.setItem('OrderDetails', JSON.stringify(this.items));
   }
 }

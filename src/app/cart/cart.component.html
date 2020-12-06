@@ -11,7 +11,9 @@
          
           <div class="col-md-8 ml-auto mr-auto">
             <div class="title-head">
-              <h4 class="title"><small>Cart Item List</small> 
+              <h4 class="title"><small>Cart Item List
+                <button class="btn btn-success" style="float:right" (click)="onCheckout()">Proceed To Checkout</button>
+              </small> 
             </h4>
             </div>
             <div class="table-responsive">
@@ -22,8 +24,8 @@
                     <th>Name</th>
                     <th>Size</th>
                     <th>Price</th>
-                    <th>Rental Days</th>
-                    <th>Fine Amount</th>
+                    <th>Quantity</th>
+                    <th>From Date - To Date</th>
                     <th>Image</th>
                     <th class="text-right">Actions</th>
                   </tr>
@@ -32,16 +34,16 @@
                   <tr *ngFor="let item of items; index as i">
                     <td class="text-center">{{i+1}}</td>
                     <td>{{item.itemName}}</td>
-                <td>{{item.itemDetails[0].itemSize}}</td>
-                <td>{{item.itemDetails[0].itemPrice}}</td>
-                <td>{{item.itemDetails[0].rentalDays}}</td>
-                <td>{{item.itemDetails[0].fineAmount}}</td>
+                <td>{{item.size}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.fromDate}} - {{item.toDate}}</td>
 
-                <td><img height="100" width="80" [src]="item.images[0].imagePath"></td>
+                <td><img height="100" width="80" [src]="item.image"></td>
 
                     <td class="td-actions text-right">
                      
-                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"   class="btn btn-danger btn-link btn-sm">
+                      <button type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove" (click)="removeCartItem(item)"  class="btn btn-danger btn-link btn-sm">
                         <i class="fa fa-times"></i>
                       </button>
                     </td>

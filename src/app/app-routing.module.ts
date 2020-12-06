@@ -1,3 +1,7 @@
+import { ReturnItemsComponent } from './return-items/return-items.component';
+import { OrdersComponent } from './orders/orders.component';
+import { RentalItemsComponent } from './rental-items/rental-items.component';
+import { PaymentComponent } from './payment/payment.component';
 import { ProductsWebComponent } from './products-web/products-web.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 import { ProductsComponent } from './products/products.component';
@@ -24,6 +28,10 @@ const routes: Routes = [
   { path: 'product', component: ProductsComponent },
   { path: 'viewproducts', component: ProductsWebComponent },
   { path: 'productinventory', component: ProductInventoryComponent },
+  { path: 'payment', component: PaymentComponent },
+  { path: 'rentalitems', component: RentalItemsComponent },
+  { path: 'orders', component: OrdersComponent },
+  { path: 'returnitems', component: ReturnItemsComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   private baseUrl = 'http://localhost:8082/api/v1/inventory';
+  private salesUrl = 'http://localhost:8083/api/v1/sales';
 
   constructor(private http: HttpClient) {}
 
@@ -68,5 +69,30 @@ export class ProductService {
   UpdateInventory(productInfo: any): Observable<any> {
     console.log(productInfo);
     return this.http.put(`${this.baseUrl}/update-inventory`, productInfo);
+  }
+
+  getRentailItems(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/get-rental-items`);
+  }
+
+  getReturnItems(): Observable<any> {
+    return this.http.get(`${this.salesUrl}/return-items`);
+  }
+
+  returnItem(id: any): Observable<any> {
+    return this.http.delete(`${this.salesUrl}/delete-rental-item/${id}`);
+  }
+
+  getOrder(page: any, size: any, orderNumber: any): Observable<any> {
+    if (orderNumber === undefined) {
+      return this.http.get(
+        `${this.salesUrl}/get-orders?page=${page}&size=${size}`
+      );
+    }
+    if (orderNumber !== undefined || orderNumber !== null) {
+      return this.http.get(
+        `${this.salesUrl}/get-orders?orderNum=${orderNumber}&page=${page}&size=${size}`
+      );
+    }
   }
 }

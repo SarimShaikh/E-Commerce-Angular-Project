@@ -26,11 +26,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { NgHttpLoaderModule } from 'ng-http-loader';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProductsWebComponent } from './products-web/products-web.component';
 import { CartComponent } from './cart/cart.component';
+import { PaymentComponent } from './payment/payment.component';
+import { RentalItemsComponent } from './rental-items/rental-items.component';
+import { OrdersComponent } from './orders/orders.component';
+import { ReturnItemsComponent } from './return-items/return-items.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +51,10 @@ import { CartComponent } from './cart/cart.component';
     NavComponent,
     ProductsWebComponent,
     CartComponent,
+    PaymentComponent,
+    RentalItemsComponent,
+    OrdersComponent,
+    ReturnItemsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +70,7 @@ import { CartComponent } from './cart/cart.component';
     MatInputModule,
     MatMenuModule,
     NgHttpLoaderModule.forRoot(),
+    NgxDaterangepickerMd.forRoot(),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

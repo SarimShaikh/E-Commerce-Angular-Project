@@ -1,0 +1,55 @@
+<app-nav></app-nav>
+
+
+<div class="section section-inputs permission-panel section-gray">
+
+<div class="container tim-container">
+        <div class="title">
+          <h3>Payment Panel</h3>
+        </div>
+        <div class="row">
+         
+          <div class="col-md-8 ml-auto mr-auto">
+            <div class="title-head">
+              <h4 class="title"><small>Payment Details
+          
+              </small> 
+            </h4>
+            </div>
+            <div class="card" style="padding:20px">
+              <div class="row">
+                
+              </div>
+              <table class="table table-bordered">
+                <tr>
+                  <th>Total Amount</th>
+                  <th>No of Items</th>
+
+                </tr>
+                  
+                
+                <tr>
+                  <td>{{totalAmount}}</td>
+                  <td>{{NoOfItems}}</td>
+                </tr>
+              </table>
+              <div class="form-group">
+                <label>Mode of Payment</label>
+                <select class="form-control" [(ngModel)]="modeOfPay">
+                    <option value="Online">Online</option>
+                    <option value="COD">Cash on delivery</option>
+
+                </select>
+              
+              </div>
+              <div class="form-group" *ngIf="modeOfPay=='Online'">
+                <label>Card Number</label>
+                <input class="form-control" type="number">
+              </div>
+              <button class="btn btn-success" (click)="onPaySubmit()">Submit</button>
+              <div style="float: right">
+              <img src="../../assets/img/credit-cards.png" width="200">
+
+              </div>
+
+            </div>

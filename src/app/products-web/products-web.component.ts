@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Renderer2 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-products-web',
@@ -11,6 +12,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./products-web.component.css'],
 })
 export class ProductsWebComponent implements OnInit {
+  selected: { startDate: Moment; endDate: Moment };
+
+  orderDetails = [];
+
   items = [];
   page = 0;
   size = 5;
@@ -27,6 +32,8 @@ export class ProductsWebComponent implements OnInit {
   addToCartItemDetail: any = {};
 
   cartItems = [];
+
+  quantityResult: boolean = false;
 
   //Menu Logic Variables
 
@@ -108,6 +115,7 @@ export class ProductsWebComponent implements OnInit {
 
   onSearch(value) {
     console.log(this.pageNumber);
+
     this.searchedValue = value;
     this.viewProductService
       .getProductsAllByPage(this.pageNumber, this.size, this.searchedValue)
@@ -197,14 +205,63 @@ export class ProductsWebComponent implements OnInit {
   }
 
   onCartSubmit() {
+    if (this.form.size == null) {
+      alert('Please Select Size...!');
+      return;
+    }
+    if (this.quantityResult === false) {
+      alert('Quanity must be entered or entered less quantity...!');
+      return;
+    }
     this.addToCartItem.itemDetails = this.addToCartItemDetail;
+
     this.cartItems.push(this.addToCartItem);
+
+    for (var i = 0; i < this.cartItems.length; i++) {
+      let orderDetail = {
+        itemId: this.cartItems[i].itemDetails[0].itemId,
+        itemDetailId: this.cartItems[i].itemDetails[0].itemDetailId,
+        price: this.cartItems[i].itemDetails[0].itemPrice,
+        size: this.cartItems[i].itemDetails[0].itemSize,
+
+        image: this.cartItems[i].images[0].imagePath,
+        itemName: this.cartItems[i].itemName,
+        quantity: this.form.quantity,
+        fromDate: this.selected.startDate.format('YYYY-MM-DD'),
+        toDate: this.selected.endDate.format('YYYY-MM-DD'),
+      };
+      this.orderDetails.push(orderDetail);
+    }
+
+    window.localStorage.setItem(
+      'OrderDetails',
+      JSON.stringify(this.orderDetails)
+    );
 
     window.localStorage.setItem('CartItems', JSON.stringify(this.cartItems));
     this.modalService.dismissAll();
     //console.log(this.addToCartItem);
   }
-
+  onQuantityChange() {
+    if (this.form.size == 'null') {
+      return false;
+    } else {
+      this.viewProductService
+        .getQuantityStatus(this.form.size, this.form.quantity)
+        .subscribe(
+          (res) => {
+            this.quantityResult = Boolean(res);
+            if (res === false) {
+              alert('Please Enter Less Quantity');
+            }
+          },
+          (error) => {
+            // this.router.navigate(['login']);
+            console.log(error);
+          }
+        );
+    }
+  }
   //Menu Code
 
   menuenter() {

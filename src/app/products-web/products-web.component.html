@@ -164,9 +164,20 @@
         <label for="penaltyCharges">Penalty Charges</label>
           <input disabled id="penaltyCharges" class="form-control" placeholder="" name="penaltyCharges"  [(ngModel)]="form.penaltyCharges" #penaltyCharges="ngModel" required>
       </div>
-      
+         <div class="form-group">
+        <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" class="form-control" placeholder="" name="quantity" (keyup)="onQuantityChange()"  [(ngModel)]="form.quantity" #quantity="ngModel" required>
+      </div>
+  
+      <div class="form-group">
+        <label>Select Rental Date Range</label>
+<input type="text" ngxDaterangepickerMd name="selected" [(ngModel)]="selected" class="form-control"/>
+
+      </div>
       <input type="hidden" id="itemId" name="itemId" [(ngModel)]="form.itemId" #companyId="ngModel" required>
-  </div>
+ 
+  
+    </div>
   <div class="modal-footer">
           <button type="button" (click)="onCartSubmit()" class="btn btn-primary">Add</button>
 
