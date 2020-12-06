@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { Renderer2 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-products-web',
@@ -15,7 +16,7 @@ export class ProductsWebComponent implements OnInit {
   selected: { startDate: Moment; endDate: Moment };
 
   orderDetails = [];
-
+  dateBox = '';
   items = [];
   page = 0;
   size = 5;
@@ -34,7 +35,6 @@ export class ProductsWebComponent implements OnInit {
   cartItems = [];
 
   quantityResult: boolean = false;
-
   //Menu Logic Variables
 
   modulesList: Array<any>;
@@ -55,7 +55,7 @@ export class ProductsWebComponent implements OnInit {
   ngOnInit() {
     let categoryId = window.localStorage.getItem('CategoryId');
     let subCategoryId = window.localStorage.getItem('SubCategoryId');
-
+    console.log(subCategoryId);
     setTimeout(() => {
       if (categoryId !== undefined) {
         this.getItemWithCategory(categoryId);
@@ -178,6 +178,11 @@ export class ProductsWebComponent implements OnInit {
   AddToCart(item, content) {
     this.addToCartItem = item;
     this.form.size = null;
+    this.form.price = '';
+    this.form.rentalDays = '';
+    this.selected = { startDate: moment(), endDate: moment() };
+    this.form.penaltyCharges = '';
+    this.form.quantiy = '';
     this.itemDetails = item.itemDetails;
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -216,7 +221,7 @@ export class ProductsWebComponent implements OnInit {
     this.addToCartItem.itemDetails = this.addToCartItemDetail;
 
     this.cartItems.push(this.addToCartItem);
-
+    this.orderDetails = [];
     for (var i = 0; i < this.cartItems.length; i++) {
       let orderDetail = {
         itemId: this.cartItems[i].itemDetails[0].itemId,
@@ -232,6 +237,8 @@ export class ProductsWebComponent implements OnInit {
       };
       this.orderDetails.push(orderDetail);
     }
+
+    console.log(this.orderDetails);
 
     window.localStorage.setItem(
       'OrderDetails',

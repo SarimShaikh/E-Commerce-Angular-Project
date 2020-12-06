@@ -74,7 +74,7 @@ export class PaymentComponent implements OnInit {
           alert(res.message);
           window.localStorage.setItem('OrderDetails', null);
           setTimeout(() => {
-            this.router.navigate(['home']);
+            window.location.href = '';
           }, 1000);
         },
         (error) => {
