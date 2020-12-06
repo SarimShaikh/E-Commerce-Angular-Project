@@ -187,6 +187,7 @@ export class ProductsComponent implements OnInit {
     }
   }
   getProducts() {
+    $('#tbl_product').DataTable().destroy();
     this.productService.getProducts().subscribe(
       (res) => {
         this.products = res.items;
